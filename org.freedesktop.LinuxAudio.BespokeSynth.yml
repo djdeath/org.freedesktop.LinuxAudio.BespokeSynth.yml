@@ -25,6 +25,8 @@ finish-args:
   # X11 + XShm access
   - --share=ipc
   - --socket=x11
+  # Hardware accelerated graphics
+  - --device=dri
   # Needs to talk to the network:
   - --share=network
   # Needs to save files locally
