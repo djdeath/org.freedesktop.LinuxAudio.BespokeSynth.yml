@@ -1,0 +1,31 @@
+app-id: org.freedesktop.LinuxAudio.BespokeSynth
+runtime: org.freedesktop.Platform
+runtime-version: '19.08'
+sdk: org.freedesktop.Sdk
+command: BespokeSynth
+modules:
+  - name: BespokeSynth
+    buildsystem: simple
+    build-commands:
+      - ln -s JUCE-5.4.7 JUCE
+      - make -j$(nproc) -C BespokeSynth/Builds/LinuxMakefile/
+      - install -D BespokeSynth/Builds/LinuxMakefile/build/BespokeSynth /app/bin/BespokeSynth
+      - cp -r BespokeSynth/Builds/MacOSX/build/Release/data/ /app/data
+    sources:
+      - type: archive
+        url: https://github.com/juce-framework/JUCE/archive/5.4.7.zip
+        sha512: 4c74ae3e9182001d8a82a60b0e7215d5a892a3eab576edaa28fc95002b77ee89331bc5390f1ed3bef1fb81257ff8e5bafe1918bc1c2a54e00a5364f0f317936b
+        dest: JUCE
+      - type: git
+        url: https://github.com/djdeath/BespokeSynth
+        branch: "linux-fixes"
+        dest: BespokeSynth
+
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=x11
+  # Needs to talk to the network:
+  - --share=network
+  # Needs to save files locally
+  - --filesystem=xdg-documents

@@ -1,0 +1,7 @@
+INSTALL locally:
+
+  flatpak-builder --force-clean --ccache --user --install build-dir org.freedesktop.LinuxAudio.BespokeSynth.yml
+
+RUN:
+
+  flatpak run org.freedesktop.LinuxAudio.BespokeSynth
